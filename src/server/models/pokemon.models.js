@@ -8,6 +8,18 @@ class PokemonModel {
       return e;
     }
   }
+
+  async getById(id) {
+    try {
+      return await prisma.pokemons.findUnique({
+        where: {
+          id
+        },
+      });
+    } catch (e) {
+      return e;
+    }
+  }
 }
 
 module.exports = PokemonModel;
