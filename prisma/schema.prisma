@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Pokemons {
+  id              Int     @id @default(autoincrement())
+  name            String
+  pokedex_number  Int
+  img_name        String
+  generation      Int
+  evolution_stage Int?
+  evolved         String
+  familid_id      Int?
+  cross_gen       Int
+  type_1          String
+  type_2          String?
+  weather_1       String
+  weather_2       String?
+  stat_total      Int
+  atk             Int
+  def             Int
+  sta             Int
+  legendary       Int
+  aquireable      Int
+  spawns          Int
+  regional        Int
+  raidable        Int
+  hatchable       Int
+  shiny           Int
+  nest            Int
+  new             Int
+  not_gettable    Int
+  future_evolve   Int
+  CP_40           Int
+  CP_39           Int
+}
