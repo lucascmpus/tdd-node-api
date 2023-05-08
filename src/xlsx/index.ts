@@ -1,20 +1,20 @@
-const xlsx = require("xlsx");
-const path = require("path");
-const express = require("express");
-const prisma = require("../prisma/prisma.js");
-const cors = require("cors");
+import xlsx from "xlsx";
+import path from "path";
+import express from "express";
+import prisma from "../prisma/prisma";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-var file = xlsx.readFile(path.join(__dirname, "pokego.xlsx"));
+const file = xlsx.readFile(path.join(__dirname, "pokego.xlsx"));
 
 const pokexcel = xlsx.utils.sheet_to_json(file.Sheets[file.SheetNames[0]]);
-let inserts = [];
+const inserts = [];
 app.get("/", async function (req, res) {
-  pokexcel.forEach(async (item) => {
+  pokexcel.forEach((item) => {
     console.log("Criando Item -> ", item.Name);
     inserts.push(
       prisma.pokemons.create({
