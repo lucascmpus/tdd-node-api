@@ -2,7 +2,7 @@ import PokemonModel from "../models/pokemon.models";
 import { Request, Response } from "express";
 
 class PokemonController {
-  async getAll(req: Request, res: Response) {
+  async getAll(req: Request, res: Response): Promise<Response> {
     try {
       const data = await new PokemonModel().getAll();
 
@@ -12,7 +12,7 @@ class PokemonController {
     }
   }
 
-  async getOne(req: Request, res: Response) {
+  async getOne(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
 
@@ -24,7 +24,7 @@ class PokemonController {
     }
   }
 
-  async getPokemonsByType(req: Request, res: Response) {
+  async getPokemonsByType(req: Request, res: Response): Promise<Response> {
     try {
       const type = req.query.type as string;
 
@@ -42,8 +42,20 @@ class PokemonController {
 
       const data = await new PokemonModel().getAllUniqueTypeLegendary(
         type,
-        legendary
+        legendary,
       );
+
+      return res.status(200).json(data);
+    } catch (e) {
+      return res.status(400).json({ error: e });
+    }
+  }
+
+  async getPokemonsByPage(req: Request, res: Response): Promise<Response> {
+    try {
+      const id = parseInt(req.params.id as string);
+
+      const data = await new PokemonModel().getPokemonsPerPage(id);
 
       return res.status(200).json(data);
     } catch (e) {

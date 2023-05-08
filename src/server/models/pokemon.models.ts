@@ -45,6 +45,22 @@ class PokemonModel {
 
     return pokemonsFilterByTypeLegendary;
   }
+
+  async getPokemonsPerPage(page: number) {
+    const limitPage = 20;
+
+    const pokemonsPerPage = await prisma.pokemons.findMany({
+      skip: page * limitPage,
+      take: limitPage,
+      orderBy: {
+        id: "asc",
+      },
+    });
+
+    if (!pokemonsPerPage) throw new Error("Not Found Pokemons");
+
+    return pokemonsPerPage;
+  }
 }
 
 export default PokemonModel;
